@@ -14,11 +14,11 @@
     </div>
     <ol>
 <!--      router를 사용해서 페이지를 이동할 것-->
-      <li>구구단 (6.19 ~ 6.26) </li>
-      <li>가사 속 단어 찾기 (6.26 ~ 7.3)</li>
-      <li>신호등 (7.3 ~ 7.10) </li>
-      <li>끝말잇기  (7.10 ~ 7.17) </li>
-      <li>숫자 야구  (7.17 ~ 7.24)  </li>
+      <li @click="fnLinkMultiplicationTable()">구구단 (6.19 ~ 6.26) </li>
+      <li @click="fnLinkFindWord()">가사 속 단어 찾기 (6.26 ~ 7.3)</li>
+      <li @click="fnLinkTrafficLight()">신호등 (7.3 ~ 7.10) </li>
+      <li @click="fnLinkEndTalk()">끝말잇기  (7.10 ~ 7.17) </li>
+      <li @click="fnLinkNumberBaseball()">숫자 야구  (7.17 ~ 7.24)  </li>
       <li>틱택토 (7.24 ~ 7.31)</li>
     </ol>
   </div>
@@ -39,6 +39,23 @@ export default {
     return {
       value: '',
     };
+  },
+  methods: {
+    fnLinkMultiplicationTable() {
+      this.$router.push('/multiplicationTable/');
+    },
+    fnLinkFindWord() {
+      this.$router.push('/findWord/');
+    },
+    fnLinkTrafficLight() {
+      this.$router.push('/trafficLight/');
+    },
+    fnLinkEndTalk() {
+      this.$router.push('/endTalk/');
+    },
+    fnLinkNumberBaseball() {
+      this.$router.push('/numberBaseball/');
+    },
   },
 
 };

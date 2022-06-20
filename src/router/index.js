@@ -30,7 +30,7 @@ const routes = [
     component: () => import('@/views/endTalk/index.vue'),
   },
   {
-    path: '/numberbaseball/',
+    path: '/numberBaseball/',
     name: 'number_baseball',
     component: () => import('@/views/numberBaseball/index.vue'),
   },
