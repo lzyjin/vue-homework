@@ -31,38 +31,40 @@ export default {
       const color = e.target.getAttribute('data-color');
       const buttons = document.querySelectorAll('.button');
       const lights = document.querySelectorAll('.light');
+      let interval;
+
+      const loop = function () {
+        document.querySelector('.light[data-color="green"]').classList.remove('active');
+        document.querySelector('.light[data-color="red"]').classList.add('active');
+
+        setTimeout(() => {
+          document.querySelector('.light[data-color="red"]').classList.remove('active');
+          document.querySelector('.light[data-color="yellow"]').classList.add('active');
+        }, 3000);
+
+        setTimeout(() => {
+          // clearTimeout(timer1);
+          document.querySelector('.light[data-color="yellow"]').classList.remove('active');
+          document.querySelector('.light[data-color="green"]').classList.add('active');
+        }, 5000);
+      };
       buttons.forEach((v) => {
         v.classList.remove('active');
       });
       lights.forEach((v) => {
         v.classList.remove('active');
       });
-
       e.target.classList.add('active');
-      if (color !== 'auto') {
-        document.querySelector(`.light[data-color="${color}"]`).classList.add('active');
-      }
       if (color === 'auto') {
-        document.querySelector('.light[data-color="red"]').classList.add('active');
-
-        const timer1 = setTimeout(() => {
-          document.querySelector('.light[data-color="red"]').classList.remove('active');
-          document.querySelector('.light[data-color="yellow"]').classList.add('active');
-        }, 3000);
-
-        const timer2 = setTimeout(() => {
-          // clearTimeout(timer1);
-          document.querySelector('.light[data-color="yellow"]').classList.remove('active');
-          document.querySelector('.light[data-color="green"]').classList.add('active');
-        }, 5000);
-
-        const timer3 = setTimeout(() => {
-          // clearTimeout(timer2);
-        }, 7000);
-
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-        clearTimeout(timer3);
+        loop();
+        interval = setInterval(loop, 8000);
+      }
+      if (color !== 'auto') {
+        clearInterval(interval);
+        document.querySelector('.light[data-color="red"]').classList.remove('active');
+        document.querySelector('.light[data-color="yellow"]').classList.remove('active');
+        document.querySelector('.light[data-color="green"]').classList.remove('active');
+        document.querySelector(`.light[data-color="${color}"]`).classList.add('active');
       }
     },
   },
@@ -107,7 +109,7 @@ export default {
   border-radius: 10px;
   width: 70px;
   text-align: center;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
 }
 .button-wrap .button:hover {
