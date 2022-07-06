@@ -33,6 +33,13 @@ export default {
       const lights = document.querySelectorAll('.light');
       let interval;
 
+      // 내가 맨날 하던 이벤트에 따라 active 클래스 넣었다 뺐다 하는 로직밖에 생각이 안나서 이렇게 함.
+
+      // '자동' 버튼 클릭하면 빨간불 노란불 파란불이 몇초씩 번갈아가면서 켜져야하니까 setTimeout을 써서 몇초 뒤에 다음 불이 켜지도록 함.
+      // 한 싸이클이 돌면 다시 처음으로 돌아가서 반복 실행되어야하니까 setInterval 사용함
+      // 그런데 '자동'버튼을 클릭하고 다른 색깔 버튼을 클릭했을 때 setInterval을 clear하고 싶은데 setInterval 변수가 다른 조건문 안에서 선언되어서
+      // clear할 수가 없음...
+
       const loop = function () {
         document.querySelector('.light[data-color="green"]').classList.remove('active');
         document.querySelector('.light[data-color="red"]').classList.add('active');
