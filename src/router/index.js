@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/trafficLight/',
     name: 'traffic_light',
-    component: () => import('@/views/trafficLight/index.vue'),
+    component: () => import('@/views/trafficLight/index-2.vue'),
   },
   {
     path: '/endTalk/',

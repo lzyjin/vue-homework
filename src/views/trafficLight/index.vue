@@ -23,7 +23,7 @@ export default {
   name: 'traffic_light',
   data() {
     return {
-
+      interval: '',
     };
   },
   methods: {
@@ -31,7 +31,6 @@ export default {
       const color = e.target.getAttribute('data-color');
       const buttons = document.querySelectorAll('.button');
       const lights = document.querySelectorAll('.light');
-      let interval;
 
       // 내가 맨날 하던 이벤트에 따라 active 클래스 넣었다 뺐다 하는 로직밖에 생각이 안나서 이렇게 함.
 
@@ -64,10 +63,10 @@ export default {
       e.target.classList.add('active');
       if (color === 'auto') {
         loop();
-        interval = setInterval(loop, 8000);
+        this.interval = setInterval(loop, 8000);
       }
       if (color !== 'auto') {
-        clearInterval(interval);
+        clearInterval(this.interval);
         document.querySelector('.light[data-color="red"]').classList.remove('active');
         document.querySelector('.light[data-color="yellow"]').classList.remove('active');
         document.querySelector('.light[data-color="green"]').classList.remove('active');
