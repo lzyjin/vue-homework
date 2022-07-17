@@ -1,20 +1,24 @@
 <template>
   <div>
-    <h1>
-      <span style="cursor: pointer" @click="$router.go(-1)">&lt;</span>&nbsp;&nbsp;
-      문자 인증 3분 컷
-    </h1>
+      <h1> <span style="cursor: pointer" @click="$router.go(-1)">&lt;</span>&nbsp;&nbsp; 끝말 잇기</h1>
+
+    <div>
+      <p class="score-time"><span>점수: {{ score }}</span><span>시간: {{ time }}</span></p>
+      <p>단어: {{ prevText }}</p>
+      <div>
+        <span>{{ myTurn ? '나' : '컴퓨터' }}: </span>
+        <input type="text" v-model.trim="currText" v-on:keyup.enter="send">
+        <button v-on:click="send">입력</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-/*
-문자메시지 3분 인증
-1. 인증하기를 누르면 3분 카운트 다운 시작
-2. 00:00이 되기 전 1234를 입력하면 alert(인증되었습니다.) + 카운트 멈춤
-3. 1234이 아니면 틀렸습니다. alert , 카운트 그대로
-4. 00:00이 되면 인증하기 버튼을 재발송으로
-5. 재발송을 누르면 3분 인증 처음 시작으로
+/**
+ * 필요하다면 vue의 lifecyclehook을 사용할 것
+ * 필요하다면 watch를 사용할 것
+ * methods를 사용할 것
  */
 
 // let interval; // 전역 변수로 만들어서 쓸 수 있음 -> 뷰가 관리 안하니 추천은 안함
