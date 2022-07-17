@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     send() {
-      setInterval(() => {
+      const interval = setInterval(() => {
         // setTimeout(() => {
         //   if (this.time > 0) {
         //     this.time -= 1;
@@ -57,6 +57,9 @@ export default {
         }
         console.log(this.time);
       }, 1000);
+      console.log(interval);
+      // clearInterval(interval);
+
       if (this.prevText.slice(-1) === this.currText.slice(0, 1)) {
         if (this.myTurn) {
           alert('잘했어요!');
@@ -65,6 +68,7 @@ export default {
         this.prevText = this.currText;
         this.currText = '';
         this.myTurn = !this.myTurn;
+        this.time = 10;
       }
     },
   },
