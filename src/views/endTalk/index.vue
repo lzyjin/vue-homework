@@ -4,6 +4,17 @@
       <span style="cursor: pointer" @click="$router.go(-1)">&lt;</span>&nbsp;&nbsp;
       문자 인증 3분 컷
     </h1>
+    <div v-if="isCompleted">인증 완료!</div>
+    <div v-else>
+      <div class="button-wrap">
+        <button class="send" v-on:click="sendNum">인증번호 발송</button>
+        <button class="send" v-on:click="sendNum">재발송</button>
+      </div>
+      인증번호 <input type="text" v-model.trim="text" placeholder="숫자 4자리 입력">
+      <!-- <p>{{ time.getMinutes() + ':' + time.getSeconds() }}</p>-->
+      <p class="timer">{{ timer }}</p>
+      <button class="save" v-bind:class="{ active: state }" v-on:click="checkNum">확인</button>
+    </div>
   </div>
 </template>
 
@@ -17,52 +28,62 @@
 5. 재발송을 누르면 3분 인증 처음 시작으로
  */
 
-// let interval; // 전역 변수로 만들어서 쓸 수 있음 -> 뷰가 관리 안하니 추천은 안함
 export default {
   name: 'end_talk',
   beforeMount() {
-  },
-  watch: {
+
   },
   data() {
     return {
-      myTurn: true,
-      score: 0,
-      time: 10,
-      prevText: '강아지',
-      currText: '',
+      // time: 180000,
+      time: new Date('2000-01-01 00:03:00'),
+      timer: '3:00',
+      text: '',
       interval: '',
+      state: false,
+      isCompleted: false,
     };
   },
-  methods: {
-    send() {
-      // if (this.currText.trim() !== '') {
-      if (this.currText.length <= 0) { // vue로 할 수 있음
-        alert('input please');
-        return;
+  watch: {
+    text() {
+      if (this.text.length === 4) {
+        this.state = true;
+      } else {
+        this.state = false;
       }
+    },
+  },
+  methods: {
+    sendNum() {
       clearInterval(this.interval); // 이전에 남아있는 interval 해제
+      // eslint-disable-next-line no-alert
+      alert('인증번호가 발송되었습니다.');
       this.interval = setInterval(() => {
-        if (this.time > 0) {
-          this.time -= 1;
+        // this.time -= 1;
+
+        // 초 빼기 참고한 블로그: https://hianna.tistory.com/330
+        this.time.setSeconds(this.time.getSeconds() - 1);
+        this.timer = `${this.time.getMinutes()}:${this.time.getSeconds()}`;
+      }, 1000);
+    },
+    checkNum() {
+      if (this.text !== '1234') {
+        alert('인증번호가 다릅니다.');
+        this.text = '';
+      }
+      if (this.text === '1234') {
+        if (this.time.getMinutes() === 0 && this.time.getSeconds() === 0) {
+          clearInterval(this.interval);
+          this.time = new Date('2000-01-01 00:03:00');
+          alert('시간이 만료되었습니다. 재발송하세요.');
+          this.text = '';
         } else {
           clearInterval(this.interval);
-          // interval 클리어 하고싶음
-          this.myTurn = !this.myTurn;
-          this.time = 10;
+          this.time = new Date('2000-01-01 00:03:00');
+          alert('인증되었습니다.');
+          this.text = '';
+          this.isCompleted = true;
         }
-        console.log('time: ', this.time);
-      }, 1000);
-
-      if (this.prevText.slice(-1) === this.currText.slice(0, 1)) {
-        if (this.myTurn) {
-          alert('잘했어요!');
-          this.score += 10;
-        }
-        this.prevText = this.currText;
-        this.currText = '';
-        this.myTurn = !this.myTurn;
-        this.time = 10;
       }
     },
   },
@@ -70,11 +91,35 @@ export default {
 </script>
 
 <style scoped>
-  .score-time {
-
-  }
-  .score-time span {
-    display: inline-block;
-    margin-right: 20px;
-  }
+.button-wrap {
+  display: flex;
+  gap: 10px;
+}
+.send {
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px 50px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.save {
+  cursor: pointer;
+  display: inline-block;
+  padding: 20px 100px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+}
+.save.active {
+  background: #253de0;
+  color: #fff;
+}
+.timer {
+  color: red;
+  font-weight: bold;
+}
 </style>
